@@ -33,16 +33,16 @@ public class CounterOnMicrophone : MonoBehaviour
 
             if (volumeMicrophone >= Data._volume && Data._delay <= _timer)
             {
-                Data._count++;
-                Counter.text = Data._count.ToString();
+                Data.Value++;
+                Counter.text = Data.Value.ToString();
                 _timer = 0f;
                 //Debug.Log("CounterOnMicrophone:UpdateDetected");
             }
 #if UNITY_EDITOR
             else if (volumeMicrophone >= speshialvolumeMicrophone && speshial_timer <= _timer) // time filecode
             {
-                Data._count++;
-                Counter.text = Data._count.ToString();
+                Data.Value++;
+                Counter.text = Data.Value.ToString();
                 _timer = 0f;
                 //Debug.Log("CounterOnMicrophone:UpdateDetected");
             }

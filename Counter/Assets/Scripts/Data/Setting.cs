@@ -14,17 +14,17 @@ public class Setting : MonoBehaviour
     public void SaveSettings()
     {
         UpdateCounter();
-        counter._name = Name.text;
+        counter.Name = Name.text;
         try
         {
-            counter._count = Convert.ToInt32(Meaning.text);
-            counter._countReset = Convert.ToInt32(MeaningForReset.text);
+            counter.Value = Convert.ToInt32(Meaning.text);
+            counter.ValueReset = Convert.ToInt32(MeaningForReset.text);
         }
         catch
         {
             Debug.LogError("Count Or CountReset: Failed Convert To Int32");
-            counter._count = 0;
-            counter._countReset = 0;
+            counter.Value = 0;
+            counter.ValueReset = 0;
         }
 
         try
@@ -35,15 +35,15 @@ public class Setting : MonoBehaviour
         catch { Debug.LogError("Volume Or Delay: Failed Convert To Float"); }
 
 
-        string old_group = counter._groupName;
+        string old_group = counter.GroupName;
 
         if (Group.text == "")
         {
-            counter._groupName = "All Counter";
+            counter.GroupName = "All Counter";
         }
         else
         {
-            counter._groupName = Group.text;
+            counter.GroupName = Group.text;
         }
         controlData.GroupExists(Group.text);
 
@@ -63,10 +63,10 @@ public class Setting : MonoBehaviour
     public void LoadSettings()
     {
         UpdateCounter();
-        Name.text = counter._name;
-        Group.text = counter._groupName;
-        Meaning.text = counter._count.ToString();
-        MeaningForReset.text = counter._countReset.ToString();
+        Name.text = counter.Name;
+        Group.text = counter.GroupName;
+        Meaning.text = counter.Value.ToString();
+        MeaningForReset.text = counter.ValueReset.ToString();
         Volume.text = counter._volume.ToString();
         Delay.text = counter._delay.ToString();
 

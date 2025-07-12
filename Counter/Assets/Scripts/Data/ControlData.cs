@@ -1,11 +1,7 @@
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-using System;
 using UnityEngine.EventSystems;
-using UnityEngine.Events;
 
 public class ControlData : MonoBehaviour
 {
@@ -40,7 +36,6 @@ public class ControlData : MonoBehaviour
     private RectTransform rectTransform;
     private RectTransform rectTransformGroup;
     private GameObject parent;
-    private Text version;
     bool isGroup = false;
     [SerializeField]private GameObject parentGroup;
 
@@ -57,9 +52,6 @@ public class ControlData : MonoBehaviour
 
     private void Start()
     {
-        version = GameObject.FindGameObjectWithTag("version").GetComponent<Text>();
-        VersionControl();
-
         anchoreMax_1 = Diff(anchoreMin_1,anchoreDiff);
         anchoreMax_2 = Diff(anchoreMin_2,anchoreDiff);
 
@@ -84,7 +76,7 @@ public class ControlData : MonoBehaviour
         int idInMasive = 0;
         for (int idGlobal = 0; idGlobal < countObj; idGlobal++)
         {
-            if (counterData[idGlobal]._groupName == groupName)
+            if (counterData[idGlobal].GroupName == groupName)
             {
                 Counter_Now = Instantiate(Counter, Vector3.zero, Quaternion.identity);
                 Counter_Now.transform.SetParent(parent.transform);
@@ -93,8 +85,8 @@ public class ControlData : MonoBehaviour
 
                 SettingsButtonToCounter(Counter_Now, idGlobal);
 
-                Counter_Now.transform.GetChild(2).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal]._count.ToString();
-                Counter_Now.transform.GetChild(3).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal]._name;
+                Counter_Now.transform.GetChild(2).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal].Value.ToString();
+                Counter_Now.transform.GetChild(3).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal].Name;
 
                 rectTransform = Counter_Now.GetComponent<RectTransform>();
                 if (idInMasive % 2 == 0)
@@ -147,8 +139,8 @@ public class ControlData : MonoBehaviour
 
             SettingsButtonToCounter(Counter_Now,idGlobal);
 
-            Counter_Now.transform.GetChild(2).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal]._count.ToString();
-            Counter_Now.transform.GetChild(3).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal]._name;
+            Counter_Now.transform.GetChild(2).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal].Value.ToString();
+            Counter_Now.transform.GetChild(3).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal].Name;
 
             rectTransform = Counter_Now.GetComponent<RectTransform>();
             if (idGlobal % 2 == 0)
@@ -179,14 +171,14 @@ public class ControlData : MonoBehaviour
 
     public void UpdateCouter(int idGlobal)
     {
-        parent.transform.GetChild(gameData.counterData[idGlobal].IDInMasive).GetChild(2).GetComponent<Text>().text = gameData.counterData[idGlobal]._count.ToString();
+        parent.transform.GetChild(gameData.counterData[idGlobal].IDInMasive).GetChild(2).GetComponent<Text>().text = gameData.counterData[idGlobal].Value.ToString();
         SaveGameData();
         //Debug.Log("ControlData:UpdateCounter " + idGlobal + " " + gameData.counterData[idGlobal].IDInMasive + " " + parent.transform.GetChild(gameData.counterData[idGlobal].IDInMasive).GetChild(2).GetComponent<Text>().text);
     }
     public void UpdateCouterName(int idGlobal)
     {
-        Counter_Now.transform.GetChild(2).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal]._count.ToString();
-        Counter_Now.transform.GetChild(3).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal]._name;
+        Counter_Now.transform.GetChild(2).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal].Value.ToString();
+        Counter_Now.transform.GetChild(3).gameObject.GetComponent<Text>().text = gameData.counterData[idGlobal].Name;
         SaveGameData();
         //Debug.Log("ControlData:UpdateCounter " + idGlobal + " " + gameData.counterData[idGlobal].IDInMasive + " " + parent.transform.GetChild(gameData.counterData[idGlobal].IDInMasive).GetChild(2).GetComponent<Text>().text);
     }
@@ -244,13 +236,13 @@ public class ControlData : MonoBehaviour
         string name = StartDataCounter.transform.GetChild(1).gameObject.GetComponent<InputField>().text;
 
         CounterData newCounter = new CounterData();
-        if (name != "") newCounter._name = name;
+        if (name != "") newCounter.Name = name;
 
         GroupExists(groupName);
 
         if (groupName != "")
         {
-            newCounter._groupName = groupName;
+            newCounter.GroupName = groupName;
             IsGroop = true;
         }
 
@@ -271,13 +263,13 @@ public class ControlData : MonoBehaviour
         string name = StartDataCounter.transform.GetChild(1+IdObj).gameObject.GetComponent<InputField>().text;
 
         CounterData newCounter = new CounterData();
-        if (name != "") newCounter._name = name;
+        if (name != "") newCounter.Name = name;
 
         GroupExists(groupName);
 
         if (groupName != "")
         {
-            newCounter._groupName = groupName;
+            newCounter.GroupName = groupName;
             IsGroop = true;
         }
 
@@ -294,7 +286,7 @@ public class ControlData : MonoBehaviour
 
     public void DeliteCounter(int ID)
     {
-        string grouNameToID = gameData.counterData[ID]._groupName;
+        string grouNameToID = gameData.counterData[ID].GroupName;
 
         gameData.counterData.RemoveAt(ID);
 
@@ -323,7 +315,7 @@ public class ControlData : MonoBehaviour
                     {
                         gameData.counterData.RemoveAt(ID);
 
-                        groupname = gameData.counterData[ID]._groupName;
+                        groupname = gameData.counterData[ID].GroupName;
                     }
                 }
             }
@@ -428,7 +420,7 @@ public class ControlData : MonoBehaviour
         {
             foreach (CounterData counter in gameData.counterData)
             {
-                if (counter._groupName == groupNameToID)
+                if (counter.GroupName == groupNameToID)
                 {
                     return false;
                 }
@@ -454,21 +446,6 @@ public class ControlData : MonoBehaviour
 
         int _count = gameData.counterData.Count;
         for (int idGlobal = 0; idGlobal < _count; idGlobal++) { gameData.counterData[idGlobal].ID = idGlobal; }
-    }
-
-    private void VersionControl()
-    {
-        version.text ="Version: "  + Application.version;
-
-        if (!PlayerPrefs.HasKey("oldVersion"))
-        {
-            PlayerPrefs.SetString("oldVersion", Application.version);
-        }
-        if (!PlayerPrefs.HasKey("vesion") || PlayerPrefs.GetString("vesion") != Application.version)
-        {
-            PlayerPrefs.SetString("vesion", Application.version);
-            /*код*/
-        }
     }
 
     #endregion

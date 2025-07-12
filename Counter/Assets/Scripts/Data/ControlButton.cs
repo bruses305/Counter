@@ -32,14 +32,14 @@ public class ControlButton : MonoBehaviour
     }
     public void PlusCounter(int idGlobal)
     {
-        controlData.gameData.counterData[idGlobal]._count++;
+        controlData.gameData.counterData[idGlobal].Value++;
         controlData.UpdateCouter(idGlobal);
 
         //Debug.Log("ControlButton:PlusCounter");
     }
     public void MinusCounter(int idGlobal)
     {
-        controlData.gameData.counterData[idGlobal]._count--;
+        controlData.gameData.counterData[idGlobal].Value--;
         controlData.UpdateCouter(idGlobal);
 
         //Debug.Log("ControlButton:MinusCounter");
@@ -119,21 +119,21 @@ public class ControlButton : MonoBehaviour
 
     public void PlusCount()
     {
-        controlData.gameData.counterData[ID_Total_Global]._count++;
+        controlData.gameData.counterData[ID_Total_Global].Value++;
         UpdateCount();
 
         //Debug.Log("ControlButton:PlusCount");
     }
     public void MinusCount()
     {
-        controlData.gameData.counterData[ID_Total_Global]._count--;
+        controlData.gameData.counterData[ID_Total_Global].Value--;
         UpdateCount();
 
         //Debug.Log("ControlButton:Minus");
     }
     public void Reset_Count()
     {
-        controlData.gameData.counterData[ID_Total_Global]._count = 0;
+        controlData.gameData.counterData[ID_Total_Global].Value = 0;
         UpdateCount();
 
         //Debug.Log("ControlButton:Reset_Count");
@@ -150,8 +150,8 @@ public class ControlButton : MonoBehaviour
 
     public void UpdateCount()
     {
-        CounterMending.text = controlData.gameData.counterData[ID_Total_Global]._count.ToString();
-        CounterFullScreen.text = controlData.gameData.counterData[ID_Total_Global]._count.ToString();
+        CounterMending.text = controlData.gameData.counterData[ID_Total_Global].Value.ToString();
+        CounterFullScreen.text = controlData.gameData.counterData[ID_Total_Global].Value.ToString();
         controlData.SaveGameData();
         //Debug.Log("ControlButton:UpdateCount");
     }
@@ -159,14 +159,14 @@ public class ControlButton : MonoBehaviour
     private void UpdateGlobalID(int idGlobal)
     {
         ID_Total_Global = idGlobal;
-        CounterName.text = controlData.gameData.counterData[idGlobal]._name;
-        CounterGroupName.text = controlData.gameData.counterData[idGlobal]._groupName;
+        CounterName.text = controlData.gameData.counterData[idGlobal].Name;
+        CounterGroupName.text = controlData.gameData.counterData[idGlobal].GroupName;
         //Debug.Log("ControlButton:UpdateGlobalID");
     }
     public void UpdateGlobalID()
     {
-        CounterName.text = controlData.gameData.counterData[ID_Total_Global]._name;
-        CounterGroupName.text = controlData.gameData.counterData[ID_Total_Global]._groupName;
+        CounterName.text = controlData.gameData.counterData[ID_Total_Global].Name;
+        CounterGroupName.text = controlData.gameData.counterData[ID_Total_Global].GroupName;
 
         //Debug.Log("ControlButton:UpdateGlobalID");
     }

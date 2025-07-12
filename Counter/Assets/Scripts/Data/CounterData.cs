@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class CounterData
 {
@@ -14,8 +12,8 @@ public class CounterData
 
     #region Global_Name
 
-    public string _name;
-    public string _groupName;
+    public string Name;
+    public string GroupName;
     public int ID;
     public int IDInMasive;
 
@@ -23,14 +21,14 @@ public class CounterData
 
     #region Data
 
-    public float _count;
+    public float Value;
     public List<int> st;
 
     #endregion
 
     #region Settings
 
-    public float _countReset;
+    public float ValueReset;
 
     #endregion
 
@@ -41,10 +39,10 @@ public class CounterData
         _delay = 1.6f;
         ID = 0;
         IDInMasive = 0;
-        _count = 0;
+        Value = 0;
 
-        _name = "Counter";
-        _groupName = "All Counter";
+        Name = "Counter";
+        GroupName = "All Counter";
 
         st = new List<int>();
     }
